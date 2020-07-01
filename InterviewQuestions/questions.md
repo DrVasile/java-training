@@ -590,12 +590,12 @@ Only annotations or XML based configurations are used to manage the transactions
 
 # Hibernate
 
-# Q1. What is Hibernate? 
+## Q1. What is Hibernate? 
 
 Hibernate is a Java based ORM tool that provides a framework for mapping domain models to database tables and vice-versa.
 It is an implementation of Java Persistence API. 
 
-# Q2. What are the benefits of using Hibernate?
+## Q2. What are the benefits of using Hibernate?
 
 1. No need for the boiler-plate code that comes with JDBC and takes care of resource management.
 2. It provides support for XML as well as JPA annotations.
@@ -604,11 +604,11 @@ It is an implementation of Java Persistence API.
 5. It is easy to integrate with other Java EE frameworks.
 6. Has support for lazy initialization using proxy objects.
 
-# Q3. How is organized the architecture of Hibernate? 
+## Q3. How is organized the architecture of Hibernate? 
 
 ![Hibernate Architecture](../img/hibernate_architecture.png)
 
-# Q4. What are the differences between get and load methods?
+## Q4. What are the differences between get and load methods?
 
 The get method returns null if the object is not found.
 It always hits the database.
@@ -619,3 +619,233 @@ The load methods throws ObjectNotFoundException if the object is not found.
 It doesn't hit the database.
 It returns a proxy object.
 It should be used if the existence of the object is guaranteed.
+
+## Q5. What are the advantages of using Hibernate over plain JDBC API?
+
+1. Hibernate removes boiler plate code that comes with JDBC API.
+2. Hibernate supports inheritance, associations and collections.
+3. It implicitly provides transaction management.
+4. JDBC API throws the checked SQLException, so this needs to be handled. 
+Hibernate wraps JDBC exceptions and throws JDBCException or HibernateException which is unchecked.
+5. Hibernate Query Language (HQL) is more close to Java.
+For JDBC there is the need to write native SQL statements.
+6. Hibernate supports query caching.
+7. Hibernate provides mechanisms for creating tables. 
+In the case of JDBC the tables must be existent.
+8. Hibernate configuration helps in using JDBC like connection as well as JNDI DataSource for the connection pool. 
+This is a very important feature in enterprise application and completely missing in JDBC API.
+9. Hibernate supports JPA annotations, so the code is independent of the implementation and easily replaceable with other ORM tools. 
+JDBC code is very tightly coupled with the application.
+
+# JSP
+
+## Q1. What are the lifecycle methods of a JSP? 
+
+* public void jspInit(): It is invoked only once, in order to init the instance;
+* public void _jspService(ServletRequest request, ServletResponse response) throws ServletException, IOException: It is invoked at each request;
+* public void jspDestroy(): It is invoked only once, in order to destroy the instance;
+
+## Q2. What are the JSP implicit objects? 
+
+1. out: JspWriter;
+2. request: HttpServletRequest;
+3. response: HttpServletResponse;
+4. config: ServletConfig;
+5. session: HttpSession;
+6. application: ServletContext;
+7. pageContext: PageContext;
+8. page: Object;
+9. exception: Throwable;
+
+## Q3. What are the differences between include directive and include action? 
+
+The include directive includes the content at page translation time.
+It includes the original content of the page, so the page resizes at runtime.
+It is better for static pages.
+
+The include action includes the content at request time.
+It doesn’t include the original content rather invokes the include method of Vendor provided class. 
+It is better for dynamic pages.
+
+## Q4. How to disable caching on back button of the browser? 
+
+    <%
+    response.setHeader(“Cache-Control”, ”no-store”);
+    response.setHeader(“Pragma”, ”no-cache”);
+    response.setHeader (“Expires”, “0”);
+    %> 
+    
+## Q5. What are the tag types provided in JSTL? 
+
+There are 5 types of JSTL tags:
+1. Core tags
+2. SQL tags
+3. XML tags
+4. Internationalization tags
+5. Function tags
+
+## Q6. How to disable a session in a JSP?
+
+    <%@ page session="false" %>
+    
+## Q7. How to delete a cookie in a JSP? 
+
+    Cookie cookie = new Cookie("name1", "value1");
+    response.addCookie(cookie);
+    Cookie killCookie = new Cookie("name1","value1");
+    killCookie.setMaxAge(0);
+    killCookie.setPath("/");
+    killCookie.addCookie(killCookie);
+//TODO Revise it
+
+## Q8. What is the jspDestroy method? 
+
+The jspDestroy method is invoked from javax.servlet.jsp.JspPage interface whenever a JSP page is about to be destroyed. 
+Servlets destroy methods can be easily overridden to perform cleanup, like when closing a database connection.
+
+## Q9. How is JSP better than Servlet technology? 
+
+JSP is a technology on the server’s side to make content generation simple. 
+They are document-centric, whereas servlets are programs. 
+A Java server page can contain fragments of Java program, which execute and instantiate Java classes. 
+However, they occur inside an HTML template file. 
+It provides the framework for the development of a Web Application.
+
+## Q10. Why the JSP tags should not be configured in web.xml? 
+
+There is no need to configure JSP standard tags in web.xml because when container loads the web application and find TLD files, it automatically configures them to be used directly in the application JSP pages. 
+They just need to be included in the JSP page using taglib directive.
+
+## Q11. How to use JSP EL in order to get the HTTP method name? 
+
+Using pageContext JSP EL implicit object one can get the request object reference and make use of the dot operator to retrieve the HTTP method name in the JSP page. 
+The JSP EL code for this purpose will look like:
+    
+    ${pageContext.request.method}
+    
+# Exception handling
+
+## Q1. What are the differences between Error and Exception? 
+
+An error is an irrecoverable condition occurring at runtime, for example OutOfMemory error.
+Though error can be caught in the catch block, but the execution of application will come to a halt and is not recoverable.
+
+An exception on the other hand, occurs because of bad input or programmer errors.
+These can be handled by providing a feedback for the programmer.
+
+## Q2. How exceptions can be handled in Java? 
+
+There are 5 mechanisms for exception handling in Java: 
+1. try
+2. catch
+3. finally
+4. throw
+5. throws
+
+## Q3. What are the differences between checked and unchecked exceptions? 
+
+The checked exceptions extend the Throwable class excepting the Runtime and Error hierarchies.
+These are checked at compile time.
+
+The unchecked exceptions extend RuntimeException class.
+These are not checked at compile time.
+
+## Q4. What do the keywords final, finally and finalize do? 
+
+The final keyword is used to apply restrictions on a class, method, or variable. 
+A final class can’t be inherited, a final method can’t be overridden and a final variable value can’t be changed. 
+
+The finally keyword is used to place code that will be executed whether the exception is handled or not. 
+
+The finalize method is used to perform clean up processing just before the object is garbage collected.
+
+## Q5. What are the differences between throw and throws? 
+
+The throw keyword is used to explicitly throw an exception.
+It is used in a method and it is followed by a new instance.
+
+The throws keyword is used to declare a possible exception.
+It is used in the method signature, to propagate checked exceptions.
+
+## Q6. What is the exception hierarchy in Java? 
+
+![Exception Hierarchy Diagram](../img/exception_hierarchy.png)
+
+## Q7. How to create a custom Exception? 
+
+To create a custom exception the new class needs to extend the Exception or any of its subclasses.
+
+## Q8. What are the main methods of Exception class?
+
+The main methods defined in Throwable class: 
+* String getMessage: Returns the message String of Throwable and the message can be provided while creating the exception through it’s constructor.
+* String getLocalizedMessage: This method is provided so that subclasses can override it to provide locale specific message to the calling program. 
+Throwable class implementation of this method simply use getMessage() method to return the exception message.
+* Synchronized Throwable getCause: Returns the cause of the exception or null id the cause is unknown.
+* String toString: Returns the information about Throwable in String format, the returned String contains the name of Throwable class and localized message.
+* void printStackTrace: This method prints the stack trace information to the standard error stream, this method is overloaded and we can pass PrintStream or PrintWriter as an argument to write the stack trace information to the file or stream.
+
+## Q9. Is there a case when finally will not execute?
+
+The finally block will not be executed if the program exits either by calling System.exit methods or by causing a fatal error that causes the process to abort.
+
+## Q10. Can a try block be followed by multiple catch blocks? 
+
+There can be multiple catch blocks under single try block, but the exceptions should be from specific to general. 
+
+## Q11. What is OutOfMemoryError in Java? 
+
+OutOfMemoryError is the subclass of java.lang.Error which generally occurs when our JVM runs out of memory.
+
+# Multithreading
+
+## Q1. What are the differences between processes and threads? 
+
+An executing instance of a program is called a process.
+Processes must use inter-process communication to communicate with sibling processes.
+Processes can only exercise control over child processes.
+Any change in the parent process does not affect child processes.
+Run in separate memory space.
+Process is controlled by the operating system.
+Processes are independent.
+
+A thread is a subset of a process.
+Threads can directly communicate with other threads of its process.
+Threads can exercise considerable control over threads of the same process.
+Any change in the main thread may affect the behavior of the other threads of the process.
+Run in shared memory space.
+Threads are controlled by the programmer.
+Threads are dependent.
+
+## Q2. What is synchronization? 
+
+Synchronization refers to multithreading. 
+A synchronized block of code can be executed by only one thread at a time. 
+As Java supports execution of multiple threads, two or more threads may access the same fields or objects. 
+Synchronization avoids memory consistency errors caused due to inconsistent view of shared memory. 
+When a method is declared as synchronized the thread holds the monitor for that method’s object. 
+If another thread is executing the synchronized method the thread is blocked until that thread releases the monitor. 
+
+## Q3. What is a thread? 
+
+A thread is the smallest piece of programmed instructions which can be executed independently by a scheduler. 
+In Java, all the programs will have at least one thread which is known as the main thread. 
+This main thread is created by the JVM when the program starts its execution. 
+The main thread is used to invoke the main() of the program.
+
+## Q4. How a thread can be created in Java? 
+
+In Java, there are two ways of creating threads: 
+* By implementing the Runnable interface;
+* By extending the Thread class;
+
+## Q5. What is a garbage collector in Java? 
+
+Garbage collector in Java is a program which helps in implicit memory management. 
+Since in Java, using the new keyword you can create objects dynamically, which once created will consume some memory. 
+Once the job is done and there are no more references left to the object, Java using garbage collection destroys the object and relieves the memory occupied by it. 
+Java provides four types of garbage collectors:
+* Serial
+* Parallel
+* CMS
+* G1
