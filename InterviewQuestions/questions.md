@@ -47,7 +47,7 @@ A class can be made a singleton by making its constructor private.
 
 Array List is not thread safe. 
 It is fast as it is not synchronized.
-If am element is inserted into the Array List, it increases its size by 50%.
+If an element is inserted into the Array List, it increases its size by 50%.
 Array List doesn't define the increment size.
 Array List can only use Iterator for traversing.
 
